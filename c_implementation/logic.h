@@ -37,6 +37,9 @@ void print_logic(char*** logic);
 /* The main workflow given a particular file */
 char** workflow(char* filename);
 
+/* The main workflow in debugger mode given a particular file */
+char** workflow_debugger(char* filename);
+
 /* Check if a given logic list is all-asserted */
 int check_all_asserted(char*** logic);
 
