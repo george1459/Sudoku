@@ -1,3 +1,14 @@
+/* ====================================================
+#   Copyright (C)2019 All rights reserved.
+#
+#   Author        : Shicheng Liu
+#   Email         : shicheng2000@uchicago.edu
+#   File Name     : logic.c
+#   Last Modified : 2019-07-14 22:55
+#   Describe      :
+#
+# ====================================================*/
+
 # include <stdio.h>
 # include <stdlib.h>
 # include "board.h"
@@ -46,50 +57,50 @@ char*** new_logic(char*** para) {
 	/* assert location logic */
 	for (i = 0; i < 9; i ++) {
 		for (j = 0; j < 9; j ++) {
-			printf("AT LINE %d: ", i*9+j);
+			/*printf("AT LINE %d: ", i*9+j);*/
 			for (k = 0; k < 9; k ++) {
 				res[i * 9 + j][k] = &para[i][j][k];
-				printf("%d%d%d ",i,j,k);
+				/*printf("%d%d%d ",i,j,k);*/
 			}
-			printf("\n");
+			/*printf("\n");*/
 		}
 	}
 	/* assert column logic */
 	for (i = 0; i < 9; i ++) {
 		for (k = 0; k < 9; k ++) {	
-			printf("AT LINE %d: ", i*9+k+81);
+			/*printf("AT LINE %d: ", i*9+k+81);*/
 			for (j = 0; j < 9; j ++) {
 				res[i * 9 + k + 81][j] = &para[i][j][k];	
-				printf("%d%d%d ",i,j,k);
+				/*printf("%d%d%d ",i,j,k);*/
 			}
-			printf("\n");
+			/*printf("\n");*/
 		}
 	}
 	/* assert row logic */
 	for (j = 0; j < 9; j ++) {
 		for (k = 0; k < 9; k ++) {	
-			printf("AT LINE %d: ", j*9+k+162);
+			/*printf("AT LINE %d: ", j*9+k+162);*/
 			for (i = 0; i < 9; i ++) {
 				res[j * 9 + k + 162][i] = &para[i][j][k];
-				printf("%d%d%d ",i,j,k);
+				/*printf("%d%d%d ",i,j,k);*/
 			}
-			printf("\n");
+			/*printf("\n");*/
 		}
 	}
 	/* assert block logic */
 	for (m = 0; m < 3; m ++) {
 		for (n = 0; n < 3; n ++) {
 			for (k = 0; k < 9; k ++) {
-				printf("AT LINE %d: ", m*27+n*9+k+243);
+				/*printf("AT LINE %d: ", m*27+n*9+k+243);*/
 				for (i = 0; i < 3; i ++) {
 					for (j = 0; j < 3; j ++) {
 						res[m * 27 + n * 9 + k + 243][i * 3 + j] = &para[m * 3 + i][n * 3 + j][k];
-						printf("%d%d%d ",m*3+i,n*3+j,k);
+						/*printf("%d%d%d ",m*3+i,n*3+j,k);*/
 					}
 				}
-				printf("\n");
+				/*printf("\n");*/
 			}
-			printf("\n");
+			/*printf("\n");*/
 		}
 	}
 	return res;
@@ -183,14 +194,32 @@ void print_logic(char*** logic) {
 	for (i = 0; i < 324; i ++) {
 		printf("LINE NUMBER %d:", i);
 		for (j = 0; j < 9; j ++) {
-			printf("%c", *(logic[i][j])+48);
+			printf("%c", *(logic[i][j]));
 		}
 		printf("\n");
 	}
 }
 
+int check_all_asserted(char*** logic) {
+	unsigned int i, j, checker = 0;
+	for (i = 0; i < 324; i ++) {
+		for (j = 0; j < 9; j ++) {
+			checker += *(logic[i][j]);	
+		}
+		if (checker != 1) {
+			return 0;
+		}
+		checker = 0;
+	}
+	return 1;
+}
+
 char** workflow(char* filename) {
 	char** board = read_board(filename);
+	
+	printf("Here's the original problem:\n");
+	print_board(board);
+
 	unsigned int to_deny_len, to_assert_len = 0, i, j, k;	
 	char*** para = new_parameters();
 	char*** logic = new_logic(para);
@@ -244,9 +273,6 @@ char** workflow(char* filename) {
 
 	check_asserts(logic, to_assert, &to_assert_len, to_deny, &to_deny_len);
 
-	printf("\n\n***********************************************\nNow print logic:");
-	print_logic(logic);
-
 	for (i = 0; i < 9; i ++) {
 		for (j = 0; j < 9; j ++) {
 			for (k = 0; k < 9; k ++) {
@@ -257,6 +283,14 @@ char** workflow(char* filename) {
 		}
 	}
 
+	if (check_all_asserted(logic)) {
+		printf("\nAll logic asserted. Problem solved:\n");
+	}
+	
+	else {
+		printf("\nNot all logic asserted. Problem under-solved:\n");
+	}
+
 	free_logic(logic);
 	free_parameters(para);
 	free(*to_deny);
@@ -264,15 +298,4 @@ char** workflow(char* filename) {
 	free(to_deny);
 	free(to_assert);
 	return board;
-}
-
-
-int main(int argc, char** argv) {
-	if (argc != 2) {
-		fprintf(stderr, "unable to parse input\n");
-		exit(0);
-	}
-	char** res = workflow(argv[1]);
-	print_board(res);
-	return 1;
 }

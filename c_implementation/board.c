@@ -1,20 +1,39 @@
+/* ====================================================
+#   Copyright (C)2019 All rights reserved.
+#
+#   Author        : Shicheng Liu
+#   Email         : shicheng2000@uchicago.edu
+#   File Name     : board.c
+#   Last Modified : 2019-07-14 22:55
+#   Describe      :
+#
+# ====================================================*/
+
 # include <stdio.h>
 # include <stdlib.h>
 
-/* An allocation of board, which is simply a 9 * 9 array */
+
+/* An allocation of board according to the given type */
 char** new_board() {
-	char** res = (char**)malloc(9 * sizeof(char*));
-	unsigned int i, j;
-	for (i = 0; i < 9; i ++) {
-		char* temp = (char*)malloc(9 * sizeof(char));
-		res[i] = temp;
-	}
-	for (i = 0; i < 9; i ++) {
-		for (j = 0; j < 9; j ++) {
-			res[i][j] = 0;
+	/*if (type == ARRAY) {*/
+		char** res = (char**)malloc(9 * sizeof(char*));
+		unsigned int i, j;
+		for (i = 0; i < 9; i ++) {
+			char* temp = (char*)malloc(9 * sizeof(char));
+			res[i] = temp;
 		}
-	}
-	return res;
+		for (i = 0; i < 9; i ++) {
+			for (j = 0; j < 9; j ++) {
+				res[i][j] = 0;
+			}
+		}
+		return res;
+	/*}*/
+	/*else if (type == BITS) {*/
+		/*[> Divide up each char, each char used to hold 2 consecutive values <]*/
+		/*char* res = (char*)malloc(41 * sizeof (char));*/
+		/*return res;*/
+	/*}*/
 }
 
 void free_board(char** board) {
