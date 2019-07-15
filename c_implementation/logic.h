@@ -4,7 +4,7 @@
 #   Author        : Shicheng Liu
 #   Email         : shicheng2000@uchicago.edu
 #   File Name     : logic.h
-#   Last Modified : 2019-07-14 22:56
+#   Last Modified : 2019-07-15 09:16
 #   Describe      :
 #
 # ====================================================*/
@@ -35,10 +35,10 @@ void check_denials(char*** logic, char*** to_assert, unsigned int* to_assert_len
 void print_logic(char*** logic);
 
 /* The main workflow given a particular file */
-char** workflow(char* filename);
+void workflow(char* filename);
 
 /* The main workflow in debugger mode given a particular file */
-char** workflow_debugger(char* filename);
+void workflow_debugger(char* filename);
 
 /* Check if a given logic list is all-asserted */
 int check_all_asserted(char*** logic);

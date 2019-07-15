@@ -289,7 +289,7 @@ int check_all_asserted(char*** logic) {
 	return 1;
 }
 
-char** workflow(char* filename) {
+void workflow(char* filename) {
 	char** board = read_board(filename);
 	
 	printf("Here's the original problem:\n");
@@ -366,16 +366,18 @@ char** workflow(char* filename) {
 		printf("\nNot all logic asserted. Problem under-solved:\n");
 	}
 
+	print_board(board);
+
 	free_logic(logic);
 	free_parameters(para);
 	free(*to_deny);
 	free(*to_assert);
 	free(to_deny);
 	free(to_assert);
-	return board;
+	free(board);
 }
 
-char** workflow_debugger(char* filename) {
+void workflow_debugger(char* filename) {
 	char** board = read_board(filename);
 	
 	printf("Here's the original problem:\n");
@@ -461,5 +463,5 @@ char** workflow_debugger(char* filename) {
 	free(*to_assert);
 	free(to_deny);
 	free(to_assert);
-	return board;
+	free(board);
 }
