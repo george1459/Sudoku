@@ -4,7 +4,7 @@
 #   Author        : Shicheng Liu
 #   Email         : shicheng2000@uchicago.edu
 #   File Name     : logic.c
-#   Last Modified : 2019-07-14 22:55
+#   Last Modified : 2019-07-15 16:44
 #   Describe      :
 #
 # ====================================================*/
@@ -61,50 +61,37 @@ char*** new_logic(char*** para) {
 	/* assert location logic */
 	for (i = 0; i < 9; i ++) {
 		for (j = 0; j < 9; j ++) {
-			/*printf("AT LINE %d: ", i*9+j);*/
 			for (k = 0; k < 9; k ++) {
 				res[i * 9 + j][k] = &para[i][j][k];
-				/*printf("%d%d%d ",i,j,k);*/
 			}
-			/*printf("\n");*/
 		}
 	}
 	/* assert column logic */
 	for (i = 0; i < 9; i ++) {
 		for (k = 0; k < 9; k ++) {	
-			/*printf("AT LINE %d: ", i*9+k+81);*/
 			for (j = 0; j < 9; j ++) {
 				res[i * 9 + k + 81][j] = &para[i][j][k];	
-				/*printf("%d%d%d ",i,j,k);*/
 			}
-			/*printf("\n");*/
 		}
 	}
 	/* assert row logic */
 	for (j = 0; j < 9; j ++) {
 		for (k = 0; k < 9; k ++) {	
-			/*printf("AT LINE %d: ", j*9+k+162);*/
 			for (i = 0; i < 9; i ++) {
 				res[j * 9 + k + 162][i] = &para[i][j][k];
-				/*printf("%d%d%d ",i,j,k);*/
 			}
-			/*printf("\n");*/
 		}
 	}
 	/* assert block logic */
 	for (m = 0; m < 3; m ++) {
 		for (n = 0; n < 3; n ++) {
 			for (k = 0; k < 9; k ++) {
-				/*printf("AT LINE %d: ", m*27+n*9+k+243);*/
 				for (i = 0; i < 3; i ++) {
 					for (j = 0; j < 3; j ++) {
 						res[m * 27 + n * 9 + k + 243][i * 3 + j] = &para[m * 3 + i][n * 3 + j][k];
-						/*printf("%d%d%d ",m*3+i,n*3+j,k);*/
 					}
 				}
-				/*printf("\n");*/
 			}
-			/*printf("\n");*/
 		}
 	}
 	return res;
@@ -119,7 +106,7 @@ void free_logic(char*** logic) {
 }
 
 
-/* Empty declaration */
+/* Empty declaration for mutual recursion */
 void check_denials(char*** logic, char*** to_assert, unsigned int* to_assert_len, char*** to_deny, unsigned int* to_deny_len);
 
 int check_all_zero(char** logic, char interest) {

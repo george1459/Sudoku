@@ -15,25 +15,18 @@
 
 /* An allocation of board according to the given type */
 char** new_board() {
-	/*if (type == ARRAY) {*/
-		char** res = (char**)malloc(9 * sizeof(char*));
-		unsigned int i, j;
-		for (i = 0; i < 9; i ++) {
-			char* temp = (char*)malloc(9 * sizeof(char));
-			res[i] = temp;
+	char** res = (char**)malloc(9 * sizeof(char*));
+	unsigned int i, j;
+	for (i = 0; i < 9; i ++) {
+		char* temp = (char*)malloc(9 * sizeof(char));
+		res[i] = temp;
+	}
+	for (i = 0; i < 9; i ++) {
+		for (j = 0; j < 9; j ++) {
+			res[i][j] = 0;
 		}
-		for (i = 0; i < 9; i ++) {
-			for (j = 0; j < 9; j ++) {
-				res[i][j] = 0;
-			}
-		}
-		return res;
-	/*}*/
-	/*else if (type == BITS) {*/
-		/*[> Divide up each char, each char used to hold 2 consecutive values <]*/
-		/*char* res = (char*)malloc(41 * sizeof (char));*/
-		/*return res;*/
-	/*}*/
+	}
+	return res;
 }
 
 void free_board(char** board) {
@@ -75,7 +68,6 @@ char** read_board(char* filename) {
 			fscanf(fp, "\n");
 		}
 		for (j = 0; j < 9; j ++) {
-			/*fscanf(fp, "%[\s*]", buf);*/
 			fscanf(fp, "%c", &board[i][j]);
 			fscanf(fp, " ");
 		}

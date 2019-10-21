@@ -4,7 +4,7 @@
 #   Author        : Shicheng Liu
 #   Email         : shicheng2000@uchicago.edu
 #   File Name     : board.h
-#   Last Modified : 2019-07-14 22:55
+#   Last Modified : 2019-07-15 16:44
 #   Describe      :
 #
 # ====================================================*/
@@ -45,8 +45,5 @@ void print_board(char** board);
 
 /* Read and return a board from an existing file */
 char** read_board(char* filename);
-
-/* If board contains elements of '.', change them all to zero */
-void zeroize(char** board);
 
 #endif /* _BOARD_H */
